@@ -72,14 +72,12 @@ border-radius:16px;
 scroll-snap-align:center;
 }
 
-/* fade story */
+/* story fade */
 .fadeStory{
 opacity:0;
 animation:fadeInStory 1.6s ease forwards;
 }
-@keyframes fadeInStory{
-to{opacity:1;}
-}
+@keyframes fadeInStory{to{opacity:1;}}
 
 /* effects */
 .heart{position:fixed;top:-10px;animation:fall linear forwards;}
@@ -168,6 +166,7 @@ Before this page ends — can I claim one honest, tight, stay-a-little-longer hu
 <br><br>
 <button onclick="hug()">Come here</button>
 <button onclick="hug()">Tight hug</button>
+
 <div id="hugGifs" style="display:none;margin-top:14px;">
 <img src="hug1.gif" width="150">
 <img src="hug2.gif" width="150">
@@ -178,20 +177,39 @@ Before this page ends — can I claim one honest, tight, stay-a-little-longer hu
 </div>
 
 <script>
+/* AUDIO */
 function stopAll(){music.pause();storySong.pause();hugSong.pause();}
 function playMain(){stopAll();music.currentTime=0;music.play().catch(()=>{});}
 function playStory(){stopAll();storySong.currentTime=0;storySong.play().catch(()=>{});}
 function playHug(){stopAll();hugSong.currentTime=0;hugSong.play().catch(()=>{});}
 
+/* PASSWORD — FLIRTY TEASE */
+let wrongCount=0;
 function unlock(){
+
+const lines=[
+"Wrong key… but cute try 😌",
+"Nope — but I like the confidence 😏",
+"Close? Maybe. Try again, barista ji ☕😉",
+"If guessing was love — you’d win already 💘",
+"Password galat… intention right lag rahi hai 😄"
+];
+
 if(pw.value.toLowerCase()==="i coffee you"){
 lock.style.display="none";
 main.style.display="block";
 playMain(); hearts(); confettiBurst();
 goToStep(1);
-}else err.innerText="Try again ☕";
+return;
 }
 
+wrongCount++;
+err.innerText = wrongCount<5
+? lines[(wrongCount-1)%lines.length]
+: "Hint: what I feel + what you love ☕❤️";
+}
+
+/* STEP NAV */
 let currentStep=1;
 function goToStep(n){
 document.querySelectorAll(".step").forEach(s=>s.style.display="none");
@@ -199,7 +217,6 @@ document.getElementById("s"+n).style.display="block";
 currentStep=n;
 if(n===1){qi=0;showQuestion();playMain();}
 else if(n===4){playStory();showStory();}
-else if(n===6){playHug();}
 else playMain();
 }
 function nextStep(){ if(currentStep<6) goToStep(currentStep+1); }
@@ -223,48 +240,36 @@ qOptions.appendChild(b);
 });
 }
 
-/* STORY — FADE IN */
+/* STORY — EXACT TEXT */
 const fullStoryHTML = `Our story<br><br>
 Sab start hua tumhari us novel-type Tinder DP se — yellow wali with goggles — sach bolu to full love-at-first-sight wala scene ho gaya tha mera 😭<br><br>
-
 Phir bio dekha — “coffee consultant” — aur main boli, eyyy jaa beee sab tu hi kar lega kya 😭<br><br>
-
 Phir Insta stalk kiya… coffee, coffee, coffee… aur beech me ekdum kaatilana handsome barista 😭🫶<br>
 Tab to maine decide kar liya — ye londa to chahiye hi chahiye.<br>
 Aapka shy-pose wala photo mujhe sabse zyada pasand hai — jab humne ek dusre right swipe bhi nahi kiya tha tabse wo photos mere account me saved the.<br><br>
-
 Pehli nazar me aisa jaadu kar diya tumne,<br>
 ban baithe ho mera jiya 🙂‍↔️<br><br>
-
 Maine turant swipe right kiya — aur agar aap nahi karte na,<br>
 to sach me 10–12 account bana ke karwa leti 😭🫶<br><br>
-
 Phir mall me escalator pe jab first time real me dekha,<br>
 aur tumhari voice suni — butterflies hi butterflies 😭<br>
 Besttt feeling. No exaggeration.<br><br>
-
 Aur hamara twinning moment 😭<br>
 Main khud ko rok hi nahi payi — pehli meet me hi haath pakad ke chalne lagi jaise bohot pehle se jaanti hu.<br>
 Movie bhi waise hi dekhi — ek baar bhi nahi socha aap mere bare me kya sochoge.<br>
 First impression ka to satyanaash kar liya maine 😂<br><br>
-
 Mujhe pata hai first meet pe itna close hona normal nahi hota —<br>
 shayad ajeeb laga ho… but us moment dil ne bola — aap jaisa insaan phir nahi milega —<br>
 aur maine dil ki sun li.<br>
 Agar first impression thoda crazy gaya ho — I’m really sorry 😭🤍<br><br>
-
 Aur gallery me maine aapke close ones ko bhi add kiya hai —<br>
 kyunki unhi ke bare me mujhe pata hai, baaki logo ke bare me aapne bataya nahi 😌<br>
 To technically — they are your Valentine team now 😄<br><br>
-
 Aur haan — ye pura Valentine surprise site banai hai…<br>
 isliye mere photos bhi daal diye 😂🙂‍↔️<br><br>
-
 I hope you like it ☕💌`;
 
-function showStory(){
-storyBox.innerHTML = fullStoryHTML;
-}
+function showStory(){ storyBox.innerHTML = fullStoryHTML; }
 
 /* GAME */
 let gScore=0,gTime=20,gTimer,gDrop;
@@ -290,6 +295,7 @@ function endGame(){clearInterval(gTimer);clearInterval(gDrop);}
 function hearts(){setInterval(()=>{let h=document.createElement("div");h.className="heart";h.innerHTML="❤";h.style.left=Math.random()*100+"vw";h.style.animationDuration="4s";document.body.appendChild(h);setTimeout(()=>h.remove(),4000);},350);}
 function confettiBurst(){for(let i=0;i<50;i++){let c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background="pink";c.style.animationDuration="4s";document.body.appendChild(c);setTimeout(()=>c.remove(),4000);}}
 
+/* HUG — SONG ONLY ON CLICK */
 function hug(){
 playHug();
 confettiBurst();
