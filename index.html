@@ -17,11 +17,7 @@ background:linear-gradient(135deg,#ffc0cb,#ffe8d6,#fbe7c6);
 overflow-x:hidden;
 }
 
-h1{
-font-family:"Great Vibes",cursive;
-font-size:34px;
-margin:10px 0;
-}
+h1{font-family:"Great Vibes",cursive;font-size:34px;margin:10px;}
 
 .card{
 background:rgba(255,255,255,.25);
@@ -41,9 +37,7 @@ background:white;
 color:#d6336c;
 font-weight:600;
 margin:8px 6px;
-cursor:pointer;
 font-size:15px;
-width:auto;
 min-width:140px;
 }
 
@@ -72,9 +66,9 @@ object-fit:cover;
 border-radius:12px;
 }
 
-/* effects */
 .heart{position:fixed;top:-10px;animation:fall linear forwards;}
 @keyframes fall{to{transform:translateY(110vh);opacity:0;}}
+
 .confetti{position:fixed;width:8px;height:8px;top:-10px;animation:confall linear forwards;}
 @keyframes confall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 </style>
@@ -82,7 +76,6 @@ border-radius:12px;
 
 <body>
 
-<!-- AUDIO -->
 <audio id="music" loop preload="auto"><source src="main-song.mp3"></audio>
 <audio id="storySong"><source src="story-song.mp3"></audio>
 <audio id="hugSong"><source src="hug-song.mp3"></audio>
@@ -109,19 +102,13 @@ border-radius:12px;
 <!-- s2 GAME -->
 <div class="step" id="s2">
 <h1>Catch The Flying Kisses 😘</h1>
-
 <div class="card">
 <h3>Score: <span id="score">0</span></h3>
 <h3>Time: <span id="time">20</span></h3>
-
-<div id="gameArea" style="position:relative;height:300px;
-background:rgba(255,255,255,.25);
-border-radius:14px;overflow:hidden;"></div>
-
+<div id="gameArea" style="position:relative;height:300px;background:rgba(255,255,255,.25);border-radius:14px;overflow:hidden;"></div>
 <button onclick="startGame()">Start 😄</button>
 </div>
-
-<button onclick="next(3)">Next ☕</button>
+<button onclick="nextStep()">Next ☕</button>
 </div>
 
 <!-- s3 GALLERY -->
@@ -139,7 +126,7 @@ border-radius:14px;overflow:hidden;"></div>
 <img class="photo" src="photo9.jpg">
 <img class="photo" src="photo10.jpg">
 </div>
-<button onclick="next(4)">Our Story 💌</button>
+<button onclick="nextStep()">Our Story 💌</button>
 </div>
 
 <!-- s4 STORY -->
@@ -148,7 +135,7 @@ border-radius:14px;overflow:hidden;"></div>
 <div class="card" id="storyBox" style="text-align:left;line-height:1.6;max-height:380px;overflow:auto;">
 <span id="storyText"></span>
 </div>
-<button onclick="next(5)">Next ❤️</button>
+<button onclick="nextStep()">Next ❤️</button>
 </div>
 
 <!-- s5 FINAL -->
@@ -156,11 +143,9 @@ border-radius:14px;overflow:hidden;"></div>
 <h1>Coffee You ☕❤️</h1>
 
 <div class="card">
-There’s a very calm kind of strength in you — and it pulls people in without making noise. I admire that more than you probably realize. I’m honestly a little proud of the way you think and show up.
+There’s a very calm kind of strength in you — and it pulls people in without making noise. I admire that more than you realize. I’m honestly a little proud of you.
 
-And between us — if liking you more every day is a crime, I’m not even trying to be innocent anymore.
-
-So if you ever catch me looking a second longer — that’s your effect.
+If liking you more every day is a crime — I’m not even trying to be innocent anymore.
 
 Don’t worry, I’ll act normal… just don’t stand too close and smile. Then I’m not responsible. 😌☕
 </div>
@@ -189,76 +174,62 @@ function playHug(){stopAll();hugSong.currentTime=0;hugSong.play().catch(()=>{});
 
 /* PASSWORD */
 const correctPassword="i coffee you";
-const flirty=[
-"Not yet 😌",
-"Try again ☕",
-"Almost 😉"
-];
-let attempts=0;
-
 function unlock(){
 if(pw.value.toLowerCase()===correctPassword){
 lock.style.display="none";
 main.style.display="block";
 playMain(); hearts(); confettiBurst();
-next(1);
-return;
-}
-err.innerText = flirty[attempts++ % flirty.length];
+goToStep(1);
+}else err.innerText="Try again ☕";
 }
 
-/* NAV */
-function next(n){
+/* STEP CONTROL */
+let currentStep=1;
+function goToStep(n){
 document.querySelectorAll(".step").forEach(s=>s.style.display="none");
 document.getElementById("s"+n).style.display="block";
+currentStep=n;
 
-if(n===1){ qi=0; showQuestion(); playMain(); }
-else if(n===4){ playStory(); typeStory(); }
-else { playMain(); }
+if(n===1){qi=0;showQuestion();playMain();}
+else if(n===4){playStory();typeStory();}
+else playMain();
 }
+function nextStep(){ if(currentStep<5) goToStep(currentStep+1); }
 
 /* QUESTIONS — VALENTINE LAST */
 const questions=[
 {q:"Do you like me? ☕",opts:["Yes","Very much"]},
 {q:"Do you enjoy our moments? 💞",opts:["Always","Of course"]},
-{q:"Will you be my Valentine? 🌹",opts:["Yes ❤️","Say it again"]}
+{q:"Will you be my Valentine? 🌹",opts:["Yes ❤️","Forever yes"]}
 ];
-
 let qi=0;
-
 function showQuestion(){
-if(qi>=questions.length){ next(2); return; }
+if(qi>=questions.length){goToStep(2);return;}
 qText.innerText=questions[qi].q;
 qOptions.innerHTML="";
 questions[qi].opts.forEach(o=>{
 let b=document.createElement("button");
 b.innerText=o;
-b.onclick=()=>{confettiBurst(); qi++; showQuestion();};
+b.onclick=()=>{confettiBurst();qi++;showQuestion();};
 qOptions.appendChild(b);
 });
 }
 
 /* STORY TYPING */
-const fullStory=`Sab start hua tumhari Tinder DP se… yellow goggles… love at first sight 😭
-
-Coffee consultant bio… Insta stalking… kaatilana barista 😄
-
+const fullStory=`Love at first sight from that yellow-goggles DP 😄
+Coffee bio → Insta stalking → barista charm.
 Swipe right turant.
-
-Mall escalator — first voice — butterflies.
-
-First meet — zero control — full heart.
-
-Close ones = Valentine squad 😄
-
-I hope you like this surprise ☕💌`;
+Mall escalator → butterflies.
+First meet → heart over brain.
+Close ones = Valentine squad.
+Hope you liked this surprise ☕💌`;
 
 function typeStory(){
 storyText.innerHTML="";
 let i=0;
 (function t(){
 if(i<fullStory.length){
-storyText.innerHTML+= fullStory[i]==="\n"?"<br><br>":fullStory[i];
+storyText.innerHTML+=fullStory[i]==="\n"?"<br><br>":fullStory[i];
 storyBox.scrollTop=storyBox.scrollHeight;
 i++; setTimeout(t,26);
 }})();
@@ -267,15 +238,11 @@ i++; setTimeout(t,26);
 /* GAME */
 let gScore=0,gTime=20,gTimer,gDrop;
 const items=[{e:"😘",p:2},{e:"💋",p:2},{e:"❤️",p:1},{e:"☕",p:3},{e:"😴",p:-2}];
-
 function startGame(){
-gScore=0; gTime=20;
-score.innerText=gScore; time.innerText=gTime;
-gameArea.innerHTML="";
-gTimer=setInterval(()=>{time.innerText=--gTime;if(gTime<=0) endGame();},1000);
+gScore=0;gTime=20;score.innerText=0;time.innerText=20;gameArea.innerHTML="";
+gTimer=setInterval(()=>{time.innerText=--gTime;if(gTime<=0)endGame();},1000);
 gDrop=setInterval(dropItem,550);
 }
-
 function dropItem(){
 const it=items[Math.floor(Math.random()*items.length)];
 const el=document.createElement("div");
@@ -286,10 +253,7 @@ gameArea.appendChild(el);
 setTimeout(()=>el.style.top="320px",50);
 setTimeout(()=>el.remove(),3000);
 }
-
-function endGame(){
-clearInterval(gTimer); clearInterval(gDrop);
-}
+function endGame(){clearInterval(gTimer);clearInterval(gDrop);}
 
 /* EFFECTS */
 function hearts(){
@@ -315,11 +279,18 @@ setTimeout(()=>c.remove(),4000);
 }
 
 /* HUG */
-function hug(){
-playHug();
-confettiBurst();
-hugGifs.style.display="block";
-}
+function hug(){playHug();confettiBurst();hugGifs.style.display="block";}
+
+/* SWIPE NAV */
+let sx=0;
+document.addEventListener("touchstart",e=>sx=e.changedTouches[0].screenX);
+document.addEventListener("touchend",e=>{
+let dx=sx-e.changedTouches[0].screenX;
+if(Math.abs(dx)<60) return;
+if(currentStep===2) return; // disable during game
+if(dx>0 && currentStep<5) nextStep();
+if(dx<0 && currentStep>1) goToStep(currentStep-1);
+});
 </script>
 
 </body>
