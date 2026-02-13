@@ -12,8 +12,8 @@ body{
 margin:0;
 font-family:Poppins,sans-serif;
 text-align:center;
-color:#fff;
 background:linear-gradient(140deg,#ffd6e8,#ffe9d6,#fff3c8);
+color:#6b3e3e;
 overflow-x:hidden;
 }
 
@@ -21,12 +21,11 @@ h1{
 font-family:"Great Vibes",cursive;
 font-size:36px;
 margin:12px;
-text-shadow:0 2px 8px rgba(0,0,0,.15);
+color:#c2185b;
 }
 
 .card{
-background:rgba(255,255,255,.35);
-backdrop-filter:blur(12px);
+background:rgba(255,255,255,.5);
 border-radius:20px;
 padding:18px;
 margin:16px auto;
@@ -42,13 +41,10 @@ border-radius:28px;
 background:linear-gradient(135deg,#ff8fb1,#ffb3c7);
 color:white;
 font-weight:600;
-margin:8px 6px;
+margin:8px;
 font-size:15px;
 min-width:140px;
-box-shadow:0 6px 16px rgba(255,105,135,.35);
 }
-
-button:active{transform:scale(.96);}
 
 input{
 padding:14px;
@@ -56,18 +52,15 @@ border-radius:26px;
 border:none;
 width:220px;
 max-width:80%;
-background:white;
 }
 
 .step{display:none;padding:14px;}
 
-/* swipe gallery */
 .swipeGallery{
 display:flex;
 overflow-x:auto;
 gap:14px;
 scroll-snap-type:x mandatory;
-padding:6px;
 }
 .swipeGallery img{
 height:220px;
@@ -76,8 +69,6 @@ max-width:260px;
 object-fit:cover;
 border-radius:16px;
 scroll-snap-align:center;
-flex-shrink:0;
-box-shadow:0 8px 24px rgba(0,0,0,.18);
 }
 
 /* effects */
@@ -85,12 +76,23 @@ box-shadow:0 8px 24px rgba(0,0,0,.18);
 @keyframes fall{to{transform:translateY(110vh);opacity:0;}}
 .confetti{position:fixed;width:8px;height:8px;top:-10px;animation:confall linear forwards;}
 @keyframes confall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+#finalGlow{
+font-size:20px;
+line-height:1.6;
+color:#c2185b;
+animation:glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow{
+from{text-shadow:0 0 6px #ff9bb8;}
+to{text-shadow:0 0 22px #ff4f8b;}
+}
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop preload="auto"><source src="main-song.mp3"></audio>
+<audio id="music" loop><source src="main-song.mp3"></audio>
 <audio id="storySong"><source src="story-song.mp3"></audio>
 <audio id="hugSong"><source src="hug-song.mp3"></audio>
 
@@ -119,7 +121,7 @@ box-shadow:0 8px 24px rgba(0,0,0,.18);
 <div class="card">
 <h3>Score: <span id="score">0</span></h3>
 <h3>Time: <span id="time">20</span></h3>
-<div id="gameArea" style="position:relative;height:300px;background:rgba(255,255,255,.25);border-radius:14px;overflow:hidden;"></div>
+<div id="gameArea" style="position:relative;height:300px;background:rgba(255,255,255,.4);border-radius:14px;"></div>
 <button onclick="startGame()">Start 😄</button>
 </div>
 <button onclick="nextStep()">Next ☕</button>
@@ -135,7 +137,6 @@ box-shadow:0 8px 24px rgba(0,0,0,.18);
 <img src="photo7.jpg"><img src="photo8.jpg"><img src="photo9.jpg">
 <img src="photo10.jpg">
 </div>
-<p style="opacity:.8">← swipe →</p>
 </div>
 <button onclick="nextStep()">Our Story 💌</button>
 </div>
@@ -152,7 +153,6 @@ box-shadow:0 8px 24px rgba(0,0,0,.18);
 <!-- s5 COFFEE YOU -->
 <div class="step" id="s5">
 <h1>Coffee You ☕❤️</h1>
-
 <div class="card">
 There’s a very calm kind of strength in you — and it pulls people in without making noise. I admire that more than you realize. I’m honestly a little proud of you.
 
@@ -160,21 +160,17 @@ If liking you more every day is a crime — I’m not even trying to be innocent
 
 Don’t worry, I’ll act normal… just don’t stand too close and smile. Then I’m not responsible. 😌☕
 </div>
-
 <button onclick="nextStep()">One Last Thing 🤍</button>
 </div>
 
-<!-- s6 HUG PAGE -->
+<!-- s6 HUG -->
 <div class="step" id="s6">
 <h1>Final Coffee Hug 🤗☕</h1>
-
 <div class="card">
 Before this page ends — can I claim one honest, tight, stay-a-little-longer hug from you? 🤗❤️
 <br><br>
-
 <button onclick="hug()">Come here</button>
 <button onclick="hug()">Tight hug</button>
-
 <div id="hugGifs" style="display:none;margin-top:14px;">
 <img src="hug1.gif" width="150">
 <img src="hug2.gif" width="150">
@@ -182,16 +178,27 @@ Before this page ends — can I claim one honest, tight, stay-a-little-longer hu
 </div>
 </div>
 
+<!-- s7 END -->
+<div class="step" id="s7">
+<h1>Forever Brewed ☕💘</h1>
+<div class="card">
+<div id="finalGlow">
+Coffee with you.  
+Smiles with you.  
+Moments with you.  
+And honestly… I’d choose you again. 🤍
+</div>
+</div>
+</div>
+
 </div>
 
 <script>
-/* AUDIO */
 function stopAll(){music.pause();storySong.pause();hugSong.pause();}
 function playMain(){stopAll();music.currentTime=0;music.play().catch(()=>{});}
 function playStory(){stopAll();storySong.currentTime=0;storySong.play().catch(()=>{});}
 function playHug(){stopAll();hugSong.currentTime=0;hugSong.play().catch(()=>{});}
 
-/* PASSWORD */
 function unlock(){
 if(pw.value.toLowerCase()==="i coffee you"){
 lock.style.display="none";
@@ -201,19 +208,17 @@ goToStep(1);
 }else err.innerText="Try again ☕";
 }
 
-/* STEP NAV */
 let currentStep=1;
 function goToStep(n){
 document.querySelectorAll(".step").forEach(s=>s.style.display="none");
 document.getElementById("s"+n).style.display="block";
 currentStep=n;
-
 if(n===1){qi=0;showQuestion();playMain();}
 else if(n===4){playStory();typeStory();}
 else if(n===6){playHug();}
 else playMain();
 }
-function nextStep(){ if(currentStep<6) goToStep(currentStep+1); }
+function nextStep(){ if(currentStep<7) goToStep(currentStep+1); }
 
 /* QUESTIONS */
 const questions=[
@@ -234,34 +239,43 @@ qOptions.appendChild(b);
 });
 }
 
-/* FULL STORY */
-const fullStory = `Sab start hua tumhari us novel-type Tinder DP se — yellow wali with goggles — sach bolu to full love-at-first-sight wala scene ho gaya tha mera 😭
+/* STORY — EXACT TEXT */
+const fullStory = `Our story
 
-Phir bio dekha — coffee consultant — aur main boli, eyyy jaa beee sab tu hi kar lega kya 😭
+Sab start hua tumhari us novel-type Tinder DP se — yellow wali with goggles — sach bolu to full love-at-first-sight wala scene ho gaya tha mera 😭  
 
-Phir Insta stalk kiya… coffee, coffee, coffee… aur beech me ekdum kaatilana handsome barista 😭🫶
-Tab to maine decide kar liya — ye londa to chahiye hi chahiye.
-Aapka shy pose photo tabse saved hai.
+Phir bio dekha — “coffee consultant” — aur main boli, eyyy jaa beee sab tu hi kar lega kya 😭  
 
-Pehli nazar me aisa jaadu kar diya tumne —
+Phir Insta stalk kiya… coffee, coffee, coffee… aur beech me ekdum kaatilana handsome barista 😭🫶  
+Tab to maine decide kar liya — ye londa to chahiye hi chahiye.  
+Aapka shy-pose wala photo mujhe sabse zyada pasand hai — jab humne ek dusre right swipe bhi nahi kiya tha tabse wo photos mere account me saved the.
+
+Pehli nazar me aisa jaadu kar diya tumne,  
 ban baithe ho mera jiya 🙂‍↔️
 
-Swipe right turant — warna 10–12 account bana leti 😭🫶
+Maine turant swipe right kiya — aur agar aap nahi karte na,  
+to sach me 10–12 account bana ke karwa leti 😭🫶  
 
-Mall escalator — first real look — first voice — butterflies overload.
-Best feeling.
+Phir mall me escalator pe jab first time real me dekha,  
+aur tumhari voice suni — butterflies hi butterflies 😭  
+Besttt feeling. No exaggeration.
 
-Twinning moment — pehli meet me hi haath pakad ke chalne lagi jaise forever se jaanti hu.
-Movie bhi bina overthinking dekhi.
+Aur hamara twinning moment 😭  
+Main khud ko rok hi nahi payi — pehli meet me hi haath pakad ke chalne lagi jaise bohot pehle se jaanti hu.  
+Movie bhi waise hi dekhi — ek baar bhi nahi socha aap mere bare me kya sochoge.  
+First impression ka to satyanaash kar liya maine 😂
 
-Agar first impression crazy gaya ho — sorry 🤍
-Dil ne bola — ye insaan special hai — aur maine dil ki sun li.
+Mujhe pata hai first meet pe itna close hona normal nahi hota —  
+shayad ajeeb laga ho… but us moment dil ne bola — aap jaisa insaan phir nahi milega —  
+aur maine dil ki sun li.  
+Agar first impression thoda crazy gaya ho — I’m really sorry 😭🤍
 
-Gallery me aapke close ones bhi daale — kyunki wahi meri info source the 😄
-To officially they are your Valentine squad now.
+Aur gallery me maine aapke close ones ko bhi add kiya hai —  
+kyunki unhi ke bare me mujhe pata hai, baaki logo ke bare me aapne bataya nahi 😌  
+To technically — they are your Valentine team now 😄  
 
-Aur haan — ye pura surprise site banai hai —
-isliye mere photos bhi daal diye 😂
+Aur haan — ye pura Valentine surprise site banai hai…  
+isliye mere photos bhi daal diye 😂🙂‍↔️  
 
 I hope you like it ☕💌`;
 
@@ -300,19 +314,12 @@ function endGame(){clearInterval(gTimer);clearInterval(gDrop);}
 function hearts(){setInterval(()=>{let h=document.createElement("div");h.className="heart";h.innerHTML="❤";h.style.left=Math.random()*100+"vw";h.style.animationDuration="4s";document.body.appendChild(h);setTimeout(()=>h.remove(),4000);},350);}
 function confettiBurst(){for(let i=0;i<50;i++){let c=document.createElement("div");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background="pink";c.style.animationDuration="4s";document.body.appendChild(c);setTimeout(()=>c.remove(),4000);}}
 
-/* HUG */
-function hug(){confettiBurst();hugGifs.style.display="block";}
-
-/* SWIPE NAV */
-let sx=0;
-document.addEventListener("touchstart",e=>sx=e.changedTouches[0].screenX);
-document.addEventListener("touchend",e=>{
-let dx=sx-e.changedTouches[0].screenX;
-if(Math.abs(dx)<60) return;
-if(currentStep===2) return;
-if(dx>0 && currentStep<6) nextStep();
-if(dx<0 && currentStep>1) goToStep(currentStep-1);
-});
+function hug(){
+playHug();
+confettiBurst();
+hugGifs.style.display="block";
+setTimeout(()=>goToStep(7),1800);
+}
 </script>
 
 </body>
