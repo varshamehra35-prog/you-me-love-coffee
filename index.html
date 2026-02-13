@@ -2,46 +2,79 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brewed With Love For You ☕❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body{
-margin:0;font-family:Poppins,sans-serif;text-align:center;color:#fff;
+margin:0;
+font-family:Poppins,sans-serif;
+text-align:center;
+color:#fff;
 background:linear-gradient(135deg,#ffc0cb,#ffe8d6,#fbe7c6);
 overflow-x:hidden;
 }
-h1{font-family:"Great Vibes",cursive;font-size:40px;}
+
+h1{
+font-family:"Great Vibes",cursive;
+font-size:34px;
+margin:10px 0;
+}
 
 .card{
 background:rgba(255,255,255,.25);
 backdrop-filter:blur(10px);
-border-radius:18px;
-padding:18px;
-margin:18px auto;
+border-radius:16px;
+padding:16px;
+margin:14px auto;
+width:92%;
 max-width:820px;
 }
 
 button{
-padding:12px 22px;border:none;border-radius:25px;
-background:white;color:#d6336c;
-font-weight:600;margin:8px;cursor:pointer;
+padding:14px 18px;
+border:none;
+border-radius:24px;
+background:white;
+color:#d6336c;
+font-weight:600;
+margin:8px 6px;
+cursor:pointer;
+font-size:15px;
+width:auto;
+min-width:140px;
 }
 
-input{padding:12px;border-radius:25px;border:none;}
-.step{display:none;padding:20px;}
+input{
+padding:14px;
+border-radius:24px;
+border:none;
+width:220px;
+max-width:80%;
+}
+
+.step{display:none;padding:14px;}
 
 .gallery{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:18px;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
 }
-.photo{background:white;border-radius:16px;overflow:hidden;}
-.photo img{width:100%;height:220px;object-fit:cover;}
+@media(min-width:600px){
+.gallery{grid-template-columns:repeat(3,1fr);}
+}
+.photo img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:12px;
+}
 
+/* effects */
 .heart{position:fixed;top:-10px;animation:fall linear forwards;}
 @keyframes fall{to{transform:translateY(110vh);opacity:0;}}
-
 .confetti{position:fixed;width:8px;height:8px;top:-10px;animation:confall linear forwards;}
 @keyframes confall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 </style>
@@ -66,7 +99,7 @@ gap:18px;
 
 <!-- s1 QUESTIONS -->
 <div class="step" id="s1">
-<h1>Coffee & You Questions ☕💞</h1>
+<h1>Coffee & You ☕💞</h1>
 <div class="card">
 <p id="qText"></p>
 <div id="qOptions"></div>
@@ -76,24 +109,24 @@ gap:18px;
 <!-- s2 GAME -->
 <div class="step" id="s2">
 <h1>Catch The Flying Kisses 😘</h1>
+
 <div class="card">
-<p>Tap kisses & coffee — avoid sleepy faces 😴</p>
-<h2>Score: <span id="score">0</span></h2>
+<h3>Score: <span id="score">0</span></h3>
 <h3>Time: <span id="time">20</span></h3>
 
-<div id="gameArea" style="position:relative;height:320px;
+<div id="gameArea" style="position:relative;height:300px;
 background:rgba(255,255,255,.25);
-border-radius:16px;overflow:hidden;"></div>
+border-radius:14px;overflow:hidden;"></div>
 
-<button onclick="startGame()">Start Cute Chaos 😄</button>
+<button onclick="startGame()">Start 😄</button>
 </div>
 
-<button onclick="next(3)">Next Coffee Page ☕</button>
+<button onclick="next(3)">Next ☕</button>
 </div>
 
 <!-- s3 GALLERY -->
 <div class="step" id="s3">
-<h1>Our Coffee Memory Wall ☕📸</h1>
+<h1>Our Memories ☕📸</h1>
 <div class="gallery">
 <img class="photo" src="photo1.jpg">
 <img class="photo" src="photo2.jpg">
@@ -106,16 +139,16 @@ border-radius:16px;overflow:hidden;"></div>
 <img class="photo" src="photo9.jpg">
 <img class="photo" src="photo10.jpg">
 </div>
-<button onclick="next(4)">Read Our Story ☕💌</button>
+<button onclick="next(4)">Our Story 💌</button>
 </div>
 
 <!-- s4 STORY -->
 <div class="step" id="s4">
 <h1>Our Story ☕💌</h1>
-<div class="card" id="storyBox" style="text-align:left;line-height:1.7;max-height:420px;overflow:auto;">
+<div class="card" id="storyBox" style="text-align:left;line-height:1.6;max-height:380px;overflow:auto;">
 <span id="storyText"></span>
 </div>
-<button onclick="next(5)">Next Coffee Page ☕</button>
+<button onclick="next(5)">Next ❤️</button>
 </div>
 
 <!-- s5 FINAL -->
@@ -123,24 +156,24 @@ border-radius:16px;overflow:hidden;"></div>
 <h1>Coffee You ☕❤️</h1>
 
 <div class="card">
-There’s a very calm kind of strength in you — and it pulls people in without making noise. I admire that more than you probably realize. I’m honestly a little proud of the way you think, the way you handle things, and the way you show up — steady, real, and quietly impressive.
+There’s a very calm kind of strength in you — and it pulls people in without making noise. I admire that more than you probably realize. I’m honestly a little proud of the way you think and show up.
 
-And between us — if liking you more every day is a crime, I’m not even trying to be innocent anymore. I’ll still pretend to stay composed, of course… but let’s be honest — you make that plan fail quite easily.
+And between us — if liking you more every day is a crime, I’m not even trying to be innocent anymore.
 
-So if you ever catch me looking at you a second longer or smiling for no visible reason — congratulations, that’s your effect. ☕❤️
+So if you ever catch me looking a second longer — that’s your effect.
 
 Don’t worry, I’ll act normal… just don’t stand too close and smile. Then I’m not responsible. 😌☕
 </div>
 
 <div class="card">
 Before this page ends — can I claim one honest, tight, stay-a-little-longer hug from you? 🤗❤️
-
+<br><br>
 <button onclick="hug()">Come here</button>
 <button onclick="hug()">Tight hug</button>
 
-<div id="hugGifs" style="display:none;margin-top:15px;">
-<img src="hug1.gif" width="180">
-<img src="hug2.gif" width="180">
+<div id="hugGifs" style="display:none;margin-top:12px;">
+<img src="hug1.gif" width="140">
+<img src="hug2.gif" width="140">
 </div>
 </div>
 
@@ -157,10 +190,9 @@ function playHug(){stopAll();hugSong.currentTime=0;hugSong.play().catch(()=>{});
 /* PASSWORD */
 const correctPassword="i coffee you";
 const flirty=[
-"Wrong password… but still charming 😌",
-"Add more romance and try again ☕",
-"If charm worked, you’d be inside 😉",
-"Close — my heart unlocked faster 😄"
+"Not yet 😌",
+"Try again ☕",
+"Almost 😉"
 ];
 let attempts=0;
 
@@ -169,7 +201,6 @@ if(pw.value.toLowerCase()===correctPassword){
 lock.style.display="none";
 main.style.display="block";
 playMain(); hearts(); confettiBurst();
-alert("Unlocked… and yes, you still have that effect on me ☕💘");
 next(1);
 return;
 }
@@ -181,17 +212,18 @@ function next(n){
 document.querySelectorAll(".step").forEach(s=>s.style.display="none");
 document.getElementById("s"+n).style.display="block";
 
-if(n===1){ playMain(); qi=0; showQuestion(); }
+if(n===1){ qi=0; showQuestion(); playMain(); }
 else if(n===4){ playStory(); typeStory(); }
 else { playMain(); }
 }
 
-/* QUESTIONS */
+/* QUESTIONS — VALENTINE LAST */
 const questions=[
-{q:"Will you be my Valentine? 🌹",opts:["Yes ❤️","Obviously"]},
-{q:"Do you love me? ☕",opts:["Too much","Yes"]},
-{q:"Coffee date soon?",opts:["Book it","Now"]}
+{q:"Do you like me? ☕",opts:["Yes","Very much"]},
+{q:"Do you enjoy our moments? 💞",opts:["Always","Of course"]},
+{q:"Will you be my Valentine? 🌹",opts:["Yes ❤️","Say it again"]}
 ];
+
 let qi=0;
 
 function showQuestion(){
@@ -201,30 +233,25 @@ qOptions.innerHTML="";
 questions[qi].opts.forEach(o=>{
 let b=document.createElement("button");
 b.innerText=o;
-b.onclick=()=>{confettiBurst(); alert("That answer made me smile 💞"); qi++; showQuestion();};
+b.onclick=()=>{confettiBurst(); qi++; showQuestion();};
 qOptions.appendChild(b);
 });
 }
 
 /* STORY TYPING */
-const fullStory=`Sab start hua tumhari novel-type Tinder DP se… yellow goggles… love at first sight 😭
+const fullStory=`Sab start hua tumhari Tinder DP se… yellow goggles… love at first sight 😭
 
-Coffee consultant bio… aur main boli sab tu hi karega kya 😄
+Coffee consultant bio… Insta stalking… kaatilana barista 😄
 
-Insta stalking → kaatilana barista mode activated 😭🫶
-
-Swipe right turant — warna fake accounts bana leti 😭
+Swipe right turant.
 
 Mall escalator — first voice — butterflies.
 
-First meet hand hold — zero control — zero regret.
+First meet — zero control — full heart.
 
-If first impression crazy laga ho — sorry 🤍
-Dil ne bola — special ho.
+Close ones = Valentine squad 😄
 
-Close ones bhi gallery me — Valentine squad 😄
-
-I hope you like it ☕💌`;
+I hope you like this surprise ☕💌`;
 
 function typeStory(){
 storyText.innerHTML="";
@@ -233,7 +260,7 @@ let i=0;
 if(i<fullStory.length){
 storyText.innerHTML+= fullStory[i]==="\n"?"<br><br>":fullStory[i];
 storyBox.scrollTop=storyBox.scrollHeight;
-i++; setTimeout(t,28);
+i++; setTimeout(t,26);
 }})();
 }
 
@@ -248,19 +275,20 @@ gameArea.innerHTML="";
 gTimer=setInterval(()=>{time.innerText=--gTime;if(gTime<=0) endGame();},1000);
 gDrop=setInterval(dropItem,550);
 }
+
 function dropItem(){
 const it=items[Math.floor(Math.random()*items.length)];
 const el=document.createElement("div");
 el.innerHTML=it.e;
 el.style.cssText="position:absolute;left:"+Math.random()*90+"%;top:-20px;font-size:30px;cursor:pointer;transition:top 3s linear;";
-el.onclick=()=>{gScore+=it.p;score.innerText=gScore;if(it.p<0) alert("Caught sleepy face 😄");el.remove();};
+el.onclick=()=>{gScore+=it.p;score.innerText=gScore;el.remove();};
 gameArea.appendChild(el);
-setTimeout(()=>el.style.top="340px",50);
+setTimeout(()=>el.style.top="320px",50);
 setTimeout(()=>el.remove(),3000);
 }
+
 function endGame(){
 clearInterval(gTimer); clearInterval(gDrop);
-alert("Game over 😄 Score "+gScore+" love points ☕❤️");
 }
 
 /* EFFECTS */
@@ -272,10 +300,10 @@ h.style.left=Math.random()*100+"vw";
 h.style.animationDuration="4s";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),4000);
-},300);
+},350);
 }
 function confettiBurst(){
-for(let i=0;i<60;i++){
+for(let i=0;i<50;i++){
 let c=document.createElement("div");
 c.className="confetti";
 c.style.left=Math.random()*100+"vw";
@@ -291,7 +319,6 @@ function hug(){
 playHug();
 confettiBurst();
 hugGifs.style.display="block";
-alert("Hug accepted… not letting go easily 🤗💘");
 }
 </script>
 
